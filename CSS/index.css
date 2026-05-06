@@ -1,0 +1,108 @@
+/* Reset de bază */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Stil general pagină */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    color: white;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Titlu principal */
+h1 {
+    text-align: center;
+    font-size: 50px;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+/* Meniu navigare */
+p a {
+    color: #00ffcc;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 0 10px;
+    transition: 0.3s;
+}
+
+p a:hover {
+    color: #ffffff;
+    text-shadow: 0 0 10px #00ffcc;
+}
+
+/* Paragraf principal */
+p {
+    margin: 15px 0;
+}
+
+/* Linie separator */
+hr {
+    margin: 25px 0;
+    border: none;
+    height: 2px;
+    background-color: #00ffcc;
+}
+
+/* Subtitlu */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 30px;
+}
+
+/* Tabel */
+table {
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+/* Celule */
+td {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+/* Efect hover pe card */
+td:hover {
+    transform: scale(1.05);
+    background-color: rgba(0, 255, 204, 0.2);
+}
+
+/* Imagini */
+img {
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+/* Link-uri din tabel */
+td a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 15px;
+    background-color: #00ffcc;
+    color: black;
+    text-decoration: none;
+    border-radius: 20px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+td a:hover {
+    background-color: white;
+}
+
+/* Footer */
+body > p:last-child {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    opacity: 0.7;
+}

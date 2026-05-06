@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator BMI - ARENA X</title>
+    <link rel="stylesheet" href="CSS/bmi.css">
+</head>
+<body>
+
+<h1 align="center">⚖️ CALCULATOR BMI</h1>
+
+<p align="right">
+    <a href="index.html"> Acasă</a> |
+    <a href="fotbal.html"> Fotbal</a> |
+    <a href="fitness.html"> Fitness</a> |
+        <a href="bmi.html"> Calculator BMI</a>
+</p>
+<hr>
+
+<div class="form-container">
+    <h2>Calculează-ți indicele de masă corporală</h2>
+
+    <!--
+        MODIFICARE LAB 4:
+        Am adaugat name="" la toate inputurile si method/action la form
+        pentru a putea trimite datele si catre PHP (salveaza_bmi.php).
+        Functia calculeazaBMI() din bmi.js ruleaza normal (calcul vizual),
+        iar la final trimite si formularul catre server pentru salvare in BD.
+    -->
+    <form id="formBMI" onsubmit="calculeazaBMI(event)"
+          method="POST" action="salveaza_bmi.php">
+
+        <div class="form-group">
+            <label for="nume">👤 Numele tău:</label>
+            <input type="text" id="nume" name="nume" placeholder="ex: Ion Popescu" required>
+        </div>
+
+        <div class="form-group">
+            <label for="greutate">⚖️ Greutate (kg):</label>
+            <input type="number" id="greutate" name="greutate" placeholder="ex: 75" min="20" max="300" required>
+        </div>
+
+        <div class="form-group">
+            <label for="inaltime">📏 Înălțime (cm):</label>
+            <input type="number" id="inaltime" name="inaltime" placeholder="ex: 175" min="100" max="250" required>
+        </div>
+
+        <div class="form-group">
+            <label for="varsta">🎂 Vârsta:</label>
+            <input type="number" id="varsta" name="varsta" placeholder="ex: 22" min="10" max="100" required>
+        </div>
+
+        <div class="form-group">
+            <label for="sex">🧬 Sex:</label>
+            <select id="sex" name="sex" required>
+                <option value="">-- Alege --</option>
+                <option value="masculin">Masculin</option>
+                <option value="feminin">Feminin</option>
+            </select>
+        </div>
+
+        <button type="submit">📊 Calculează BMI</button>
+        <button type="button" onclick="reseteazaForm()">🔄 Resetează</button>
+    </form>
+
+    <div id="rezultat" class="rezultat hidden"></div>
+</div>
+
+<br>
+<a href="index.html">⬅ Înapoi la pagina principală</a>
+
+<script src="JS/bmi.js"></script>
+
+<!--
+    SCRIPT LAB 4 – trimite datele si catre PHP dupa ce JS afiseaza rezultatul.
+    Nu modifica bmi.js deloc – suprascriem doar comportamentul dupa calcul.
+
+<script>
+    // Salvam referinta la functia originala din bmi.js
+    var calculeazaBMI_original = calculeazaBMI;
+
+    // Suprascriem functia pentru a adauga trimiterea catre PHP
+    calculeazaBMI = function(event) {
+        // 1. Rulam calculul vizual original (afiseaza rezultatul pe pagina)
+        calculeazaBMI_original(event);
+
+        // 2. Daca rezultatul e vizibil (fara erori), trimitem si la server
+        var rezultatDiv = document.getElementById("rezultat");
+        var areEroare   = rezultatDiv.classList.contains("eroare");
+
+        if (!areEroare && !rezultatDiv.classList.contains("hidden")) {
+            // Scurt delay ca utilizatorul sa vada rezultatul, apoi trimitem
+            setTimeout(function() {
+                document.getElementById("formBMI").submit();
+            }, 5000); // 5 secunde – utilizatorul vede rezultatul, apoi e redirectat
+        }
+    };
+</script>
+-->
+<!-- 
+    SCRIPT LAB 5 – AJAX
+    Dupa ce bmi.js afiseaza rezultatul vizual, trimitem datele in fundal
+    catre salveaza_bmi.php cu fetch(). Pagina NU se reincarca deloc.
+-->
+<script>
+    // Salvam referinta la functia originala din bmi.js
+    var calculeazaBMI_original = calculeazaBMI;
+
+    // Suprascriem functia pentru a adauga AJAX dupa calcul
+    calculeazaBMI = function(event) {
+        // 1. Rulam calculul vizual original (neschimbat)
+        calculeazaBMI_original(event);
+
+        // 2. Verificam daca calculul a avut succes (fara erori)
+        var rezultatDiv = document.getElementById("rezultat");
+        var areEroare   = rezultatDiv.classList.contains("eroare");
+
+        if (!areEroare && !rezultatDiv.classList.contains("hidden")) {
+
+            // 3. Construim obiectul cu datele din formular
+            var formData = new FormData();
+            formData.append('nume',     document.getElementById('nume').value);
+            formData.append('greutate', document.getElementById('greutate').value);
+            formData.append('inaltime', document.getElementById('inaltime').value);
+            formData.append('varsta',   document.getElementById('varsta').value);
+            formData.append('sex',      document.getElementById('sex').value);
+
+            // 4. Trimitem datele in fundal cu fetch() (AJAX)
+            fetch('salveaza_bmi.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                // 5. Afisam un indicator discret de confirmare
+                var indicator = document.getElementById('ajax-status');
+                if (!indicator) {
+                    indicator = document.createElement('p');
+                    indicator.id = 'ajax-status';
+                    indicator.style.cssText = 'text-align:center; font-size:13px; margin-top:8px; opacity:0.7;';
+                    rezultatDiv.appendChild(indicator);
+                }
+                if (data.succes) {
+                    indicator.innerHTML = '✅ Salvat în baza de date';
+                    indicator.style.color = '#00c864';
+                } else {
+                    indicator.innerHTML = '⚠️ Nu s-a putut salva: ' + data.mesaj;
+                    indicator.style.color = '#ffc800';
+                }
+            })
+            .catch(function(err) {
+                console.error('Eroare AJAX:', err);
+            });
+        }
+    };
+</script> 
+
+
+</body>
+</html>

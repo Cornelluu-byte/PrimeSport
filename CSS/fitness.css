@@ -1,0 +1,111 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* BODY */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(to right, #000000, #434343);
+    color: white;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+/* TITLURI */
+h1 {
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 15px;
+    color: #ff3c3c;
+}
+
+h2 {
+    text-align: center;
+    margin: 25px 0 15px;
+    color: #ff3c3c;
+}
+
+h3 {
+    margin-top: 20px;
+    color: #ff914d;
+}
+
+/* MENIU */
+p a {
+    color: #ff3c3c;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 0 8px;
+    transition: 0.3s;
+}
+
+p a:hover {
+    color: white;
+    text-shadow: 0 0 10px #ff3c3c;
+}
+
+/* LINIE */
+hr {
+    margin: 20px 0;
+    border: none;
+    height: 2px;
+    background: #ff3c3c;
+}
+
+/* TABEL IMAGINI */
+table {
+    margin: 20px auto;
+}
+
+td {
+    padding: 10px;
+    transition: 0.3s;
+}
+
+td:hover {
+    transform: scale(1.05);
+}
+
+/* IMAGINI */
+img {
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(255, 60, 60, 0.6);
+}
+
+/* PARAGRAF CENTRAL */
+p[align="center"] {
+    text-align: center;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+/* LISTA ORDONATA */
+ol {
+    margin-left: 40px;
+    margin-top: 10px;
+}
+
+ol li {
+    margin-bottom: 8px;
+}
+
+/* BUTON ÎNAPOI */
+a[href="index.html"] {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 10px 20px;
+    background: #ff3c3c;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+a[href="index.html"]:hover {
+    background: white;
+    color: black;
+}
